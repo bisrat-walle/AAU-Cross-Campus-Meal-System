@@ -1,0 +1,22 @@
+#form {
+    background-color: lightblue;
+    width: 300px;
+    padding: 10px;
+    margin: auto;
+}
+
+#result {
+    max-width: 300px;
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+}
+
+#container {
+    max-width: 300px;
+    max-height: 400px;
+    margin: auto;
+    padding-top: 200px;
+    background-color: black;
+    color: wheat;
+}

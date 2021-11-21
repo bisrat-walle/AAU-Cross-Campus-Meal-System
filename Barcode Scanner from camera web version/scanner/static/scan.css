@@ -1,0 +1,29 @@
+#form {
+    background-color: lightblue;
+    max-width: 300px;
+    margin: auto;
+    padding: 10px;
+}
+
+#result {
+    max-width: 300px;
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+}
+
+#container {
+    max-width: 300px;
+    max-height: 400px;
+    margin: auto;
+    background-color: black;
+    color: wheat;
+    margin-top: 20%;
+}
+
+button#scan {
+    border: none;
+    background-color: antiquewhite;
+    margin-left: 110px;
+    font-size: 25px;
+}

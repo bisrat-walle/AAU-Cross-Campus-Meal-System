@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Barcode Scanner</title>
+		{% load static %}
+		
+		<link rel="stylesheet" href="{% static 'scan.css' %}" type="text/css">
+	</head>
+	<body>
+		<div id="container">
+		
+		{% if decoded %}
+			<h3 id="result">Decoded: {{decoded}}<h3>
+		{% endif %}
+		<form action="/scanned" method="POST" id="form">
+		{% csrf_token %}
+		<button id="scan" type="submit">Scan</button>
+		</form>
+		
+		</div>
+	</body>
+</html>
