@@ -1,0 +1,185 @@
+Metadata-Version: 2.1
+Name: dbr
+Version: 8.8
+Summary: Dynamsoft Barcode Reader SDK is available for Windows, Linux(x64/ARM64), macOS, and Raspberry Pi OS, supporting linear barcode, QR Code, DataMatrix, MaxiCode, PDF417, etc.
+Home-page: https://www.dynamsoft.com/barcode-reader/overview/?utm_source=pypi
+Author: Dynamsoft
+Author-email: support@dynamsoft.com
+License: UNKNOWN
+Keywords: barcode DataMatrix QRCode 1D PDF417 MaxiCode Aztec
+Platform: linux
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries
+Classifier: License :: Other/Proprietary License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: C++
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Operating System :: Microsoft :: Windows :: Windows 10
+Classifier: Operating System :: POSIX
+Classifier: Operating System :: MacOS
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Image Recognition
+Classifier: Topic :: Software Development
+
+Dynamsoft Python Barcode SDK
+====================================================
+|version| |python| |pypi| 
+
+.. |version| image:: https://img.shields.io/pypi/v/dbr?color=orange
+.. |python| image:: https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8%20%7C%203.9-blue
+.. |pypi| image:: https://img.shields.io/pypi/dm/dbr
+
+
+What You Should Know About Dynamsoft Barcode Reader
+---------------------------------------------------
+|trial|
+
+.. |trial| image:: https://img.shields.io/badge/Get-30--day%20FREE%20Trial-blue
+            :target: https://www.dynamsoft.com/customer/license/trialLicense?product=dbr
+
+`Dynamsoft Barcode Reader SDK <https://www.dynamsoft.com/barcode-reader/overview/?utm_source=pypi>`_ 
+enables you to efficiently embed barcode reading functionality in your
+web, desktop or mobile application using just a few lines of code.
+Saving you months of added development time and resources, our SDK can
+create high-speed and reliable barcode scanner software applications to
+meet your business needs.
+
+About Python Barcode SDK
+-------------------------
+The Python Barcode SDK is a wrapper for Dynamsoft C++ Barcode SDK. It comes with all the general
+features of Dynamsoft Barcode Reader, bringing convenience for Python developers.
+
+
+Version
+-------
+
+-  8.8
+
+Supported Platforms
+-------------------
+
+- Windows x64
+
+- Linux(x64, ARM32, ARM64)
+
+- macOS(10.15+)
+
+Supported Python Versions
+-------------------------
+
+-  Python3.6
+
+-  Python3.7
+
+-  Python3.8
+
+-  Python3.9
+
+Installation
+------------
+
+   pip install dbr
+
+Supported Symbologies
+---------------------
+
+-  Linear Barcodes (1D) :
+
+   -  Code 39 *(including Code 39 Extended)*
+   -  Code 93
+   -  Code 128
+   -  Codabar
+   -  Interleaved 2 of 5
+   -  EAN-8
+   -  EAN-13
+   -  UPC-A
+   -  UPC-E
+   -  Industrial 2 of 5
+   -  MSI Code
+
+-  2D Barcodes :
+
+   -  QR Code *(including Micro QR Code)*
+   -  Data Matrix
+   -  PDF417 *(including Micro PDF417)*
+   -  Aztec Code
+   -  MaxiCode *(mode 2-5)*
+   -  DotCode
+
+-  Patch Code
+
+-  GS1 Composite Code
+
+-  GS1 DataBar :
+
+   -  Omnidirectional
+   -  Truncated
+   -  Stacked
+   -  Stacked Omnidirectional
+   -  Limited
+   -  Expanded
+   -  Expanded Stacked
+
+-  Postal Codes :
+
+   -  USPS Intelligent Mail
+   -  Postnet
+   -  Planet
+   -  Australian Post
+   -  UK Royal Mail
+
+Quick Start
+-----------
+.. code-block:: python
+
+   from dbr import *
+
+   license_key = "Input your own license"
+   image = r"Please input your own image path"
+
+   reader = BarcodeReader()
+
+   # Apply for a trial license: https://www.dynamsoft.com/customer/license/trialLicense?product=dbr&utm_source=github
+   reader.init_license(license_key)
+   try:
+      text_results = reader.decode_file(image)
+
+      if text_results != None:
+         for text_result in text_results:
+               print("Barcode Format : ")
+               print(text_result.barcode_format_string)
+               print("Barcode Text : ")
+               print(text_result.barcode_text)
+               print("Localization Points : ")
+               print(text_result.localization_result.localization_points)
+               print("Exception : ")
+               print(text_result.exception)
+               print("-------------")
+   except BarcodeReaderError as bre:
+      print(bre)
+
+
+Sample Code
+------------
+https://github.com/dynamsoft/python-barcode
+
+Documentation
+-----------------
+
+- `API <https://www.dynamsoft.com/barcode-reader/programming/python/api-reference/?utm_source=pypi>`_
+- `User Guide <https://www.dynamsoft.com/barcode-reader/programming/python/user-guide.html?utm_source=pypi>`_
+- `Release Notes <https://www.dynamsoft.com/Products/Dynamic-Barcode-Reader-News.aspx?utm_source=pypi>`_
+
+
+Contact Us
+----------
+
+support@dynamsoft.com
+
+

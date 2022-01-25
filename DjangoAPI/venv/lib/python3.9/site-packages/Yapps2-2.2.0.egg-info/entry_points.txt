@@ -1,0 +1,3 @@
+[console_scripts]
+yapps2 = yapps.cli_tool:main
+

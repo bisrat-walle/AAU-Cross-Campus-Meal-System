@@ -1,0 +1,4 @@
+#!/home/oem/n/ang-front/AAU-Cross-Campus-Meal-System/DjangoAPI/venv/bin/python3
+import sys
+from yams.tools import check_schema
+sys.exit(check_schema())

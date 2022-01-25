@@ -1,0 +1,32 @@
+Metadata-Version: 2.1
+Name: logilab-database
+Version: 1.18.1
+Summary: true unified database access
+Home-page: http://www.logilab.org/project/logilab-database
+Author: Logilab
+Author-email: contact@logilab.fr
+License: LGPL
+Platform: UNKNOWN
+Classifier: Topic :: Database
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Requires-Python: >=3
+License-File: COPYING
+License-File: COPYING.LESSER
+Requires-Dist: setuptools
+Requires-Dist: logilab-common (>=1.8.0)
+Requires-Dist: Yapps2
+Requires-Dist: python-dateutil
+
+logilab-database provides some classes to make unified access to different
+RDBMS possible:
+
+* actually compatible db-api from different drivers to postgres, mysql,
+  sqlite and sqlserver
+* additional api for full text search
+* extensions functions for common tasks such as creating database, index,
+  users, dump and restore, etc...
+* sql generation for INSERT/UPDATE/DELETE (in sqlgen.py)
+
+
