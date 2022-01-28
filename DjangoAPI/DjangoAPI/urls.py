@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf.urls import url, include
+from django.urls import include, re_path
+import rest_framework
+from rest_framework.authtoken.views import ObtainAuthToken
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^', include('MealSystem.urls')),
-    url('api/auth/', include('rest_framework.urls'))
+    path('', include('MealSystem.urls')),
 ]
