@@ -72,6 +72,7 @@ def studentApi(request, student_id=-1):
             if meal_serializer.is_valid():
                 meal_serializer.save()
                 return JsonResponse("Student Added Sucessfully!", safe=False)
+        print("data not valid")
         return JsonResponse(student_serializer.errors, safe=False)
     elif request.method == "PUT":
         student_data = JSONParser().parse(request)
