@@ -8,14 +8,14 @@ class UserSerializer(serializers.ModelSerializer):
 )
     class Meta:
         model = User
-        fields = ('username', "password")
+        fields = ("id", 'username', "password")
 
         
 
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ('student_id', 'name', 'department', 'bach', 'campus', 'section',)
+        fields = ('student_id', 'name', 'department', 'bach', 'campus', 'section')
         
         
 class ScheduleSerializer(serializers.ModelSerializer):

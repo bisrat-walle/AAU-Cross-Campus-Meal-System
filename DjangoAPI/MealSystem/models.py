@@ -68,7 +68,7 @@ class Schedule(models.Model):
     section = models.CharField(max_length = 2)
     campus = models.CharField(max_length = 50, choices = camp)
     day = models.CharField(max_length = 20, choices = d)
-    schedule_id = models.CharField(max_length = 50, unique = True, null=True)
+    schedule_id = models.IntegerField(unique = True, null=True)
     startTime = models.TimeField()
     endTime = models.TimeField()
 

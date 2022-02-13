@@ -58,39 +58,39 @@ def studentApi(request, student_id=-1):
                 return JsonResponse("No such student", safe=False) 
     elif request.method == "POST":
         student_data = JSONParser().parse(request)
+
         student_serializer = StudentSerializer(data=student_data)
+        
         if student_serializer.is_valid():
-            other_student = Student.objects.filter(student_id = student_data["student_id"])
-            if other_student is None:
-                student_serializer.save()
-                meal_data = {}
-                meal_data["student_id"] = student_data["student_id"]
-                meal_data["breakfast"] = False
-                meal_data["lunch"] = False
-                meal_data["dinner"] = False
-                meal_serializer = MealStatusSerializer(data=meal_data)
-                if meal_serializer.is_valid():
-                    meal_serializer.save()
-                    return JsonResponse("Student Added Sucessfully!", safe=False)
-        return JsonResponse("The student with the same ID already exists", safe=False)
+            student_serializer.save()
+            meal_data = {}
+            meal_data["student_id"] = student_data["student_id"]
+            meal_data["breakfast"] = False
+            meal_data["lunch"] = False
+            meal_data["dinner"] = False
+            meal_serializer = MealStatusSerializer(data=meal_data)
+            if meal_serializer.is_valid():
+                meal_serializer.save()
+                return JsonResponse("Student Added Sucessfully!", safe=False)
+        return JsonResponse(student_serializer.errors, safe=False)
     elif request.method == "PUT":
         student_data = JSONParser().parse(request)
         try:
             student = Student.objects.get(student_id=student_data["student_id"])
             student_serializer = StudentSerializer(student, data=student_data)
             if student_serializer.is_valid():
-                other_student = Student.objects.filter(student_id = student_data["student_id"])
-                if other_student is None:
-                    student_serializer.save()
-                    return JsonResponse("Data Updated Sucessfully!", safe=False)
+                student_serializer.save()
+                return JsonResponse("Data Updated Sucessfully!", safe=False)
+            return JsonResponse("Unable to Update!", safe=False)
         except:
             return JsonResponse("The same ID is already in use", safe=False)
     elif request.method == "DELETE":
         try:
             student = Student.objects.get(student_id=student_id)
             student.delete()
-        except:
             return JsonResponse("Data Deleted Sucessfully!", safe=False)
+        except:
+            return JsonResponse("Unable to Delete data!", safe=False)
 @csrf_exempt
 @api_view (['GET', 'POST', 'DELETE', 'PUT'])
 @permission_classes([IsAuthenticated])
@@ -135,8 +135,7 @@ def userApi(request, id=-1):
             return JsonResponse("Failed to Update.", safe=False)
     elif request.method == "DELETE":
         try:
-            user_data = JSONParser().parse(request)
-            user = User.objects.get(username=user_data["username"])
+            user = User.objects.get(id=id)
             if user is not None:
                 user.delete()
                 return JsonResponse("Data Deleted Sucessfully!", safe=False)
@@ -163,7 +162,8 @@ def scheduleApi(request, schedule_id=-1):
                 return JsonResponse("No such schdule", safe=False) 
     elif request.method == "POST":
         schedule_data = JSONParser().parse(request)
-        if schedule_data["startTime"] > schedule_data["endTime"]:
+        print(schedule_data)
+        if tC(schedule_data["startTime"]) > tC(schedule_data["endTime"]):
             return JsonResponse("Failed your start time is grater than than end time.", safe=False)
         possible_clashs = Schedule.objects.filter(day=schedule_data["day"], section = schedule_data["section"],bach = schedule_data["bach"], department = schedule_data["department"])
         for p in possible_clashs:
@@ -192,13 +192,12 @@ def scheduleApi(request, schedule_id=-1):
         except:
             return JsonResponse("Failed to Update.", safe=False)
     elif request.method == "DELETE":
-        schedule_data = JSONParser().parse(request)
         try:
-            schedule = Schedule.objects.get(schedule_id=schedule_data["schedule_id"])
+            schedule = Schedule.objects.get(schedule_id=schedule_id)
             schedule.delete()
             return JsonResponse("Data Deleted Sucessfully!", safe=False)
         except:
-            return JsonResponse("Data Deleted Faild!", safe=False)
+            return JsonResponse("Data Deleted Failed!", safe=False)
 
 def tC(time):
     val = ""
@@ -258,30 +257,59 @@ def scanned(request):
     try:
         student = Student.objects.get(student_id = id)
     except:
-        return JsonResponse("You are not allowed to take meal", safe=False)
+        return JsonResponse({
+            "status":False,
+            "reason":"barcode not detected"
+        }, safe=False)
     now = datetime.now()
     current_time = now.strftime("%H")
     curr_date = date.today()
     dayOfWeek = calendar.day_name[curr_date.weekday()]
     today = dayOfWeek.lower()
     schedules = Schedule.objects.filter(day=today)
+    
     for schedule in schedules:
         try:
-            studentvalid = Student.objects.filter(student_id =student["student_id"], section = schedule.section, bach = schedule.bach, department = schedule.department)
+            studentvalid = Student.objects.filter(student_id =student["student_id"], campus= "AAiT", section = schedule.section, bach = schedule.bach, department = schedule.department)
         except:
-            return JsonResponse("you are not allowed to eat")
-    if current_time in range(5, 9):
-        if meal_status["lunch"] == True:
-            return JsonResponse("You have already eat your meal!", safe=False)
-        meal_status["lunch"] = True
-    elif current_time in range(11, 12):
-        if meal_status["lunch"] == True:
-            return JsonResponse("You have already eat your meal!", safe=False)
-        meal_status["dinner"] = True
-    elif current_time in range(1, 3):
-        if meal_status["lunch"] == True:
-            return JsonResponse("You have already eat your meal!", safe=False)
+            return JsonResponse({
+            "status":False,
+            "reason":"you don't have schedule"
+        })
+    if current_time in range(5, 8):
+        if meal_status["breakfast"] == True:
+            return JsonResponse({
+            "status":False,
+            "reason":"you have already taken your breakfast"
+        }, safe=False)
         meal_status["breakfast"] = True
+        return JsonResponse({
+            "status":True,
+            "reason":"you can take your breakfast"
+        }, safe=False)
+    if current_time in range(8, 12):
+        if meal_status["lunch"] == True:
+            return JsonResponse({
+            "status":False,
+            "reason":"you have already taken your lunch"
+        }, safe=False)
+        meal_status["lunch"] = True
+        meal_status["breakfast"] = True
+        return JsonResponse({
+            "status":True,
+            "reason":"you can take your lunch"
+        }, safe=False)
+    elif current_time in range(13, 15):
+        if meal_status["dinner"] == True:
+            return JsonResponse({
+            "status":False,
+            "reason":"you have already taken your dinner"
+        }, safe=False)
+        meal_status["dinner"] = True
+        return JsonResponse({
+            "status":True,
+            "reason":"you can take your dinner"
+        }, safe=False)
     
 
 def read_bar(filename):

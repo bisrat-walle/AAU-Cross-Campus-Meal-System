@@ -67,8 +67,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'meal',
-        'USER': 'root',
-        'PASSWORD': 'bisrat w',
+        'USER': 'samuelabatneh',
+        'PASSWORD': 'bosena',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -151,9 +151,11 @@ SIMPLE_JWT = {
 
 
 PASSWORD_HASHERS = [
-    'django.contrib.auth.hashers.Argon2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
-    'django.contrib.auth.hashers.ScryptPasswordHasher',
+]
+
+TIME_INPUT_FORMATS = [
+    '%I:%M %p',  # 6:22 PM
 ]
