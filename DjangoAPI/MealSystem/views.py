@@ -334,7 +334,7 @@ def read_bar(filename):
 
 def decode_barcode():
     cam = cv.VideoCapture(0)
-    # cam = cv.VideoCapture("https://10.6.202.211:8080")
+    #cam = cv.VideoCapture("http://10.6.194.82:4747/video")
     img_counter = 0
     
     while True:
