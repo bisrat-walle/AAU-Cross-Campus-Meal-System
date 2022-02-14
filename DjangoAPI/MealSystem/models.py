@@ -17,12 +17,12 @@ class Student(models.Model):
         ("6killo","6killo"),
     )
     depart = (
-        ("software engineer","software engineer"),
-        ("electrical Engineer","electrical Engineer"),
-        ("mechanical Engineer","mechanical Engineer"),
-        ("biomedical Engineer","biomedical Engineer"),
-        ("civil Engineer","civil Engineer"),
-        ("chemical Engineer","chemical Engineer"),
+        ("Software Engineering","Software Engineering"),
+        ("Electrical Engineering","Electrical Engineering"),
+        ("Mechanical Engineering","Eechanical Engineering"),
+        ("Biomedical Engineering","Biomedical Engineering"),
+        ("Civil Engineering","Civil Engineering"),
+        ("Chemical Engineering","Chemical Engineering"),
     )
     name = models.CharField(max_length=50)
     department = models.CharField(max_length=50, choices = depart)
@@ -42,12 +42,12 @@ class Schedule(models.Model):
         ("5","5"),
     )
     depart = (
-        ("software engineer","software engineer"),
-        ("electrical Engineer","electrical Engineer"),
-        ("mechanical Engineer","mechanical Engineer"),
-        ("biomedical Engineer","biomedical Engineer"),
-        ("civil Engineer","civil Engineer"),
-        ("chemical Engineer","chemical Engineer"),
+        ("Software Engineering","Software Engineering"),
+        ("Electrical Engineering","Electrical Engineering"),
+        ("Mechanical Engineering","Eechanical Engineering"),
+        ("Biomedical Engineering","Biomedical Engineering"),
+        ("Civil Engineering","Civil Engineering"),
+        ("Chemical Engineering","Chemical Engineering"),
     )
     camp = (
         ("4killo","4killo"),
@@ -68,7 +68,6 @@ class Schedule(models.Model):
     section = models.CharField(max_length = 2)
     campus = models.CharField(max_length = 50, choices = camp)
     day = models.CharField(max_length = 20, choices = d)
-    schedule_id = models.IntegerField(unique = True, null=True)
     startTime = models.TimeField()
     endTime = models.TimeField()
 

@@ -72,7 +72,6 @@ def studentApi(request, student_id=-1):
             if meal_serializer.is_valid():
                 meal_serializer.save()
                 return JsonResponse("Student Added Sucessfully!", safe=False)
-        print("data not valid")
         return JsonResponse(student_serializer.errors, safe=False)
     elif request.method == "PUT":
         student_data = JSONParser().parse(request)
@@ -117,7 +116,6 @@ def userApi(request, id=-1):
             other_user = User.objects.get(username = user_data["username"], groups__name = "user")
             return JsonResponse("the user name already exist", safe=False)
         except:
-            print (make_password(user_data["password"]))
             user_data["password"] = make_password(user_data["password"])
             user_serializer = UserSerializer(data=user_data)
             if user_serializer.is_valid():
@@ -128,6 +126,7 @@ def userApi(request, id=-1):
         user_data = JSONParser().parse(request)
         try:
             user = User.objects.get(id=user_data["id"])
+            user_data["password"] = make_password(user_data["password"])
             user_serializer = UserSerializer(user, data=user_data)
             if user_serializer.is_valid():
                 user_serializer.save()
@@ -147,15 +146,15 @@ def userApi(request, id=-1):
 @api_view (['GET', 'POST', 'DELETE', 'PUT'])
 @permission_classes([IsAuthenticated])
 @admin_only
-def scheduleApi(request, schedule_id=-1):
+def scheduleApi(request, id=-1):
     if request.method == "GET":
-        if schedule_id==-1:
+        if id==-1:
             schedules = Schedule.objects.all()
             schedules_serializer = ScheduleSerializer(schedules, many=True)
             return JsonResponse(schedules_serializer.data, safe=False)
         else:
             try:
-                schedule = Schedule.objects.get(schedule_id=schedule_id)
+                schedule = Schedule.objects.get(id=id)
                 if schedule is not None:
                     schedule_serializer = ScheduleSerializer(schedule)
                     return JsonResponse(schedule_serializer.data, safe=False)
@@ -179,22 +178,23 @@ def scheduleApi(request, schedule_id=-1):
         schedule_data = JSONParser().parse(request)
         if schedule_data["startTime"] > schedule_data["endTime"]:
             return JsonResponse("Failed your start time is grater than than end time.", safe=False)
-        possible_clashs = Schedule.objects.filter(day=schedule_data["day"], section = schedule_data["section"],bach = schedule_data["bach"], department = schedule_data["department"]).exclude(schedule_id = schedule_data["schedule_id"])
+        possible_clashs = Schedule.objects.filter(day=schedule_data["day"], section = schedule_data["id"],bach = schedule_data["bach"], department = schedule_data["department"]).exclude(id = schedule_data["id"])
         for p in possible_clashs:
             print(schedule_data)
             if (tC(schedule_data["startTime"]) in range(tC(p.startTime), tC(p.endTime)) or tC(schedule_data["endTime"]) in range(tC(p.startTime), tC(p.endTime) or (tC(schedule_data["startTime"]) <= tC(p.startTime) and tC(schedule_data["endTime"])>=tC(p.endTime)))):
                 return JsonResponse("schdule clash", safe = False)
         try:
-            schedule = Schedule.objects.get(schedule_id=schedule_data["schedule_id"])
+            schedule = Schedule.objects.get(id=schedule_data["id"])
             schedule_serializer = ScheduleSerializer(schedule, data=schedule_data)
             if schedule_serializer.is_valid():
                 schedule_serializer.save()
                 return JsonResponse("Data Updated Sucessfully!", safe=False)
+            return JsonResponse(schedules_serializer.errors, safe=False)
         except:
             return JsonResponse("Failed to Update.", safe=False)
     elif request.method == "DELETE":
         try:
-            schedule = Schedule.objects.get(schedule_id=schedule_id)
+            schedule = Schedule.objects.get(id=id)
             schedule.delete()
             return JsonResponse("Data Deleted Sucessfully!", safe=False)
         except:
@@ -334,6 +334,7 @@ def read_bar(filename):
 
 def decode_barcode():
     cam = cv.VideoCapture(0)
+    # cam = cv.VideoCapture("https://10.6.202.211:8080")
     img_counter = 0
     
     while True:

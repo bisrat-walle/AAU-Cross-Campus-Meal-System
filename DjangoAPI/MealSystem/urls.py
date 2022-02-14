@@ -16,7 +16,7 @@ urlpatterns = [
     re_path(r'^user/(?P<id>[a-zA-Z0-9]+)$', views.userApi),
     re_path(r'^scan/', views.scanned),
     re_path(r'^schedule/$', views.scheduleApi),
-    re_path(r'^schedule/(?P<schedule_id>[a-zA-Z0-9]+)$', views.scheduleApi),
+    re_path(r'^schedule/(?P<id>[a-zA-Z0-9]+)$', views.scheduleApi),
     re_path(r'^count/$', views.studentCounter),
     re_path(r'^meal-status/$', views.mealStatusApi),
     re_path(r'^meal-status/(?P<student_id>[a-zA-Z0-9]+)$', views.mealStatusApi),

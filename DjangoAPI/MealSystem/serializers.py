@@ -1,3 +1,4 @@
+import this
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from MealSystem.models import Student, Schedule, MealStatus
@@ -5,10 +6,12 @@ from MealSystem.models import Student, Schedule, MealStatus
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
     style={'input_type': 'password'}
+    
 )
+
     class Meta:
         model = User
-        fields = ("id", 'username', "password")
+        fields = ('id', 'first_name', 'last_name', 'username', 'password')
 
         
 
@@ -21,7 +24,7 @@ class StudentSerializer(serializers.ModelSerializer):
 class ScheduleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Schedule
-        fields = ('schedule_id', 'department', 'bach', 'campus', 'section', 'startTime', 'endTime', 'day')
+        fields = ('id', 'department', 'bach', 'campus', 'section', 'startTime', 'endTime', 'day')
         
         
 class MealStatusSerializer(serializers.ModelSerializer):
