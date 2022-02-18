@@ -66,9 +66,9 @@ WSGI_APPLICATION = 'DjangoAPI.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'meal_system_final',
-        'USER': 'samuelabatneh',
-        'PASSWORD': 'bosena',
+        'NAME': 'meal',
+        'USER': 'root',
+        'PASSWORD': 'bisrat w',
         'HOST': 'localhost',
         'PORT': '3306',
     }
