@@ -23,6 +23,7 @@ class Student(models.Model):
         ("Biomedical Engineering","Biomedical Engineering"),
         ("Civil Engineering","Civil Engineering"),
         ("Chemical Engineering","Chemical Engineering"),
+        ("Other","Other"),
     )
     name = models.CharField(max_length=50)
     department = models.CharField(max_length=50, choices = depart)
@@ -78,4 +79,5 @@ class MealStatus(models.Model):
     breakfast = models.BooleanField(blank=True)
     lunch = models.BooleanField(blank=True)
     dinner = models.BooleanField(blank=True)
+    day = models.CharField(max_length=20, null=True, blank=True)
 

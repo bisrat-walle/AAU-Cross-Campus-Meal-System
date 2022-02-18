@@ -24,7 +24,7 @@ class StudentSerializer(serializers.ModelSerializer):
 class ScheduleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Schedule
-        fields = ('id', 'department', 'bach', 'campus', 'section', 'startTime', 'endTime', 'day')
+        fields = ('id','department', 'bach', 'campus', 'section', 'startTime', 'endTime', 'day')
         
         
 class MealStatusSerializer(serializers.ModelSerializer):
